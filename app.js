@@ -15,14 +15,22 @@ const contactContent = "Scelerisque eleifend donec pretium vulputate sapien. Rho
 
 app.set('view engine', 'ejs');
 
-app.get("/",(req,res)=>{
+app.get("/home",(req,res)=>{
   res.render("home",{startingContent :homeStartingContent });
 });
 app.get("/contact",(req,res)=>{
-  res.render("contact",{contact :aboutContent});
+  res.render("contact",{contact :contactContent});
 });
 app.get("/about",(req,res)=>{
   res.render("about",{about : aboutContent})
+});
+
+app.get("/compose",(req,res)=>{
+  res.render("compose");
+});
+
+app.post("/compose",(req,res)=>{
+  console.log(req.body.postTitle);
 });
 
 app.listen(5000, function() {
