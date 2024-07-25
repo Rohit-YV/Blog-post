@@ -2,10 +2,12 @@ import express from "express";
 import bodyParser from 'body-parser';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import lodash from 'lodash';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const app = express();
+const _ = lodash;
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 
@@ -43,6 +45,21 @@ app.post("/compose",(req,res)=>{
   };
   posts.push(post);
   res.redirect("/")
+});
+
+app.get('/posts/:postparam',(req,res)=>{
+  const requestedTitle = _.lowerCase(req.params.postparam);
+
+  posts.forEach((post)=>{
+    const storedTitle = _.lowerCase(post.title);
+    if (storedTitle === requestedTitle){
+      console.log("Matched found!");
+    }else{
+      console.log("NOT a Match");
+    }
+  });
+
+
 });
 app.listen(5000, function() {
   console.log("Server started on port 5000");
